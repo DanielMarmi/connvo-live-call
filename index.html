@@ -1,266 +1,656 @@
 
 <!doctype html>
-<html lang="he" dir="rtl">
+<html lang="en">
 <head>
-<meta charset="utf-8">
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Connvo Live Dialer</title>
+<title>TYKO | Live Dialer</title>
 <style>
 :root{
-  font-family:Arial,sans-serif;
-  color:#10213c;
-  background:#f3f6fc
+  --blue:#1000d5;
+  --bright:#2547ff;
+  --purple:#8985f5;
+  --bg:#f5f6fb;
+  --ink:#151821;
+  --muted:#8991a5;
+  --line:#e9ebf3;
+  --green:#00a76f;
 }
 *{box-sizing:border-box}
-body{margin:0;padding:24px}
-.shell{
+body{
+  margin:0;
+  padding:25px;
+  background:var(--bg);
+  font-family:Inter,Arial,sans-serif;
+  color:var(--ink);
+}
+.app{
   max-width:850px;
-  margin:5vh auto;
-  background:#fff;
-  border:1px solid #e3e9f3;
+  margin:20px auto;
+  background:white;
+  border:1px solid var(--line);
   border-radius:24px;
   padding:32px;
-  box-shadow:0 20px 60px #12234c12
+  box-shadow:0 18px 55px #171e5010;
 }
-.head{
+.header{
   display:flex;
+  align-items:center;
   justify-content:space-between;
-  gap:12px;
-  align-items:center
+  gap:15px;
+  padding-bottom:24px;
+  border-bottom:1px solid var(--line);
 }
-.brand{font-size:25px;font-weight:750}
-.sub{color:#7a8aa4;margin-top:8px;font-size:14px}
-.pill{
+.logo{
+  display:flex;
+  align-items:center;
+  gap:13px;
+}
+.logo svg{width:44px;height:44px}
+.logo-text{
+  font-size:34px;
+  font-weight:900;
+  letter-spacing:-2px;
+  color:var(--blue);
+}
+.subtitle{
+  font-size:12px;
+  color:var(--muted);
+  margin-top:3px;
+}
+.status{
+  padding:10px 16px;
   border-radius:30px;
-  background:#eef3fa;
-  color:#637895;
-  padding:9px 15px;
-  font-size:13px
+  background:#f0efff;
+  color:var(--blue);
+  font-size:12px;
+  font-weight:700;
+  white-space:nowrap;
+}
+.status.connected{
+  color:#087c52;
+  background:#e5f9ee;
+}
+.status.ended{
+  color:#64748b;
+  background:#f1f5f9;
 }
 .waiting{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  min-height:340px;
-  text-align:center
+  text-align:center;
+  padding:65px 15px 50px;
 }
-.pulse{
-  height:100px;
-  width:100px;
+.orbit{
+  width:112px;
+  height:112px;
+  margin:0 auto 32px;
   border-radius:50%;
-  background:#e9f1ff;
+  background:#f0efff;
   display:grid;
   place-items:center;
   position:relative;
-  margin-bottom:20px
 }
-.pulse:before,.pulse:after{
-  content:'';
+.orbit:before,.orbit:after{
+  content:"";
   position:absolute;
   inset:-12px;
-  border:2px solid #3982e5;
+  border:2px solid var(--purple);
   border-radius:50%;
-  animation:ring 2.4s ease-out infinite;
-  opacity:0
+  animation:pulse 2.5s infinite;
 }
-.pulse:after{animation-delay:1.2s}
-.pulse span{font-size:36px;color:#2064cf}
-@keyframes ring{
-  0%{transform:scale(.65);opacity:.7}
-  100%{transform:scale(1.65);opacity:0}
+.orbit:after{animation-delay:1.25s}
+@keyframes pulse{
+  0%{transform:scale(.7);opacity:.8}
+  100%{transform:scale(1.6);opacity:0}
 }
-h1{font-size:26px;margin:0 0 10px}
-.muted{color:#7a8aa4}
-.grid{
+.orbit svg{
+  width:44px;
+  height:44px;
+  color:var(--blue);
+}
+.waiting h1{
+  font-size:27px;
+  margin:0 0 12px;
+  letter-spacing:-.7px;
+}
+.waiting p{
+  font-size:14px;
+  color:var(--muted);
+  line-height:1.7;
+}
+.dots{
+  display:flex;
+  justify-content:center;
+  gap:7px;
+  margin-top:24px;
+}
+.dots span{
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--blue);
+  animation:blink 1.2s infinite;
+}
+.dots span:nth-child(2){animation-delay:.2s}
+.dots span:nth-child(3){animation-delay:.4s}
+@keyframes blink{
+  0%,80%,100%{opacity:.2}
+  40%{opacity:1}
+}
+.call{display:none}
+.call-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding:30px 0 24px;
+}
+.eyebrow{
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:1.5px;
+  color:var(--blue);
+  font-weight:800;
+}
+.customer-name{
+  font-size:32px;
+  font-weight:800;
+  letter-spacing:-1px;
+  margin:8px 0;
+  overflow-wrap:anywhere;
+}
+.customer-phone{
+  font-size:17px;
+  color:#667085;
+  direction:ltr;
+  text-align:left;
+}
+.timer{
+  text-align:center;
+  background:#f0efff;
+  color:var(--blue);
+  padding:18px 22px;
+  border-radius:16px;
+  flex-shrink:0;
+}
+.timer strong{
+  display:block;
+  font-size:27px;
+  font-variant-numeric:tabular-nums;
+}
+.timer small{font-size:11px}
+.fields{
   display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:14px;
-  margin-top:28px
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
 }
 .field{
-  padding:22px;
-  background:#f3f6fb;
+  background:#f7f8fc;
+  border:1px solid #eef0f7;
   border-radius:14px;
-  min-width:0
+  padding:18px;
+  min-width:0;
 }
 .field small{
   display:block;
-  color:#7a8aa4;
-  margin-bottom:9px
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:9px;
 }
 .field strong{
-  font-size:20px;
-  overflow-wrap:anywhere
+  font-size:15px;
+  overflow-wrap:anywhere;
 }
-.active{display:none}
-.live .active{display:block}
-.live .waiting{display:none}
-.live #status{
-  background:#e3f8eb;
-  color:#087c48
-}
-.foot{
-  margin-top:26px;
-  padding-top:17px;
-  border-top:1px solid #edf1f6;
+.field.wide{grid-column:1/-1}
+.call-indicator{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  color:var(--green);
   font-size:12px;
-  color:#8290a5
+  font-weight:700;
+  margin-bottom:12px;
 }
-.error{color:#b45309}
+.live-dot{
+  width:8px;height:8px;
+  background:var(--green);
+  border-radius:50%;
+  animation:blink 1.4s infinite;
+}
+.footer{
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:center;
+  border-top:1px solid var(--line);
+  margin-top:28px;
+  padding-top:20px;
+  color:var(--muted);
+  font-size:11px;
+}
+#connection{overflow-wrap:anywhere}
+#extraFields{display:contents}
 @media(max-width:550px){
-  body{padding:10px}
-  .shell{padding:20px}
-  .grid{grid-template-columns:1fr}
-  .brand{font-size:20px}
+  body{padding:8px}
+  .app{padding:19px;margin:5px auto}
+  .logo-text{font-size:27px}
+  .logo svg{width:34px;height:34px}
+  .customer-name{font-size:24px}
+  .fields{grid-template-columns:1fr}
+  .field.wide{grid-column:auto}
+  .call-top{align-items:flex-start}
+  .timer{padding:12px}
+  .timer strong{font-size:21px}
 }
 </style>
 </head>
 <body>
 
-<main class="shell" id="shell">
-  <div class="head">
-    <div>
-      <div class="brand">Connvo · Live Dialer</div>
-      <div class="sub">כרטיס לקוח בזמן אמת</div>
+<main class="app">
+  <header class="header">
+    <div class="logo">
+      <svg viewBox="0 0 54 54" aria-label="TYKO logo">
+        <circle cx="9" cy="9" r="8" fill="#1000d5"/>
+        <circle cx="27" cy="9" r="8" fill="#1000d5"/>
+        <circle cx="45" cy="9" r="8" fill="#1000d5"/>
+        <circle cx="9" cy="27" r="8" fill="#8985f5"/>
+        <circle cx="27" cy="27" r="8" fill="#8985f5"/>
+        <circle cx="45" cy="27" r="8" fill="#8985f5"/>
+        <circle cx="9" cy="45" r="8" fill="#8985f5"/>
+        <circle cx="27" cy="45" r="8" fill="#8985f5"/>
+        <circle cx="45" cy="45" r="8" fill="#8985f5"/>
+      </svg>
+      <div>
+        <div class="logo-text">TYKO</div>
+        <div class="subtitle">Live Dialer Workspace</div>
+      </div>
     </div>
-    <span class="pill" id="status">ממתין לשיחה</span>
-  </div>
+    <span class="status" id="status">STANDBY</span>
+  </header>
 
-  <section class="waiting">
-    <div class="pulse"><span>☎</span></div>
-    <h1>ממתין לשיחה הבאה</h1>
-    <div class="muted">
-      פרטי הלקוח יופיעו כאן עם תחילת השיחה
+  <section class="waiting" id="waiting">
+    <div class="orbit">
+      <svg viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="1.7"
+           stroke-linecap="round" stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2
+        19.79 19.79 0 0 1-8.63-3.07
+        19.5 19.5 0 0 1-6-6
+        19.79 19.79 0 0 1-3.07-8.67
+        A2 2 0 0 1 4.11 2h3
+        a2 2 0 0 1 2 1.72
+        c.13.96.36 1.91.68 2.81
+        a2 2 0 0 1-.45 2.11L8.09 9.91
+        a16 16 0 0 0 6 6l1.27-1.25
+        a2 2 0 0 1 2.11-.45
+        c.9.32 1.85.55 2.81.68
+        A2 2 0 0 1 22 16.92z"/>
+      </svg>
+    </div>
+    <h1>Waiting for next call</h1>
+    <p>
+      Your workspace is ready.<br>
+      Customer information will appear automatically.
+    </p>
+    <div class="dots">
+      <span></span><span></span><span></span>
     </div>
   </section>
 
-  <section class="active">
-    <div class="grid">
-      <div class="field">
-        <small>שם הלקוח</small>
-        <strong id="name">—</strong>
+  <section class="call" id="call">
+    <div class="call-top">
+      <div>
+        <div class="call-indicator">
+          <span class="live-dot"></span>
+          <span id="callLabel">LIVE CALL CONNECTED</span>
+        </div>
+        <div class="eyebrow">Customer Profile</div>
+        <div class="customer-name" id="name">—</div>
+        <div class="customer-phone" id="phone">—</div>
       </div>
-      <div class="field">
-        <small>מספר טלפון</small>
-        <strong id="phone">—</strong>
+      <div class="timer">
+        <strong id="duration">00:00</strong>
+        <small>CALL DURATION</small>
       </div>
+    </div>
+
+    <div class="fields">
       <div class="field">
-        <small>נציג</small>
+        <small>Assigned Agent</small>
         <strong id="agent">—</strong>
       </div>
       <div class="field">
-        <small>שלוחה / יעד</small>
+        <small>Extension / Destination</small>
         <strong id="extension">—</strong>
       </div>
       <div class="field">
-        <small>תור</small>
+        <small>Queue</small>
         <strong id="queue">—</strong>
       </div>
       <div class="field">
-        <small>משך שיחה</small>
-        <strong id="duration">00:00</strong>
+        <small>Call Status</small>
+        <strong id="callStatus">Connected</strong>
       </div>
+      <div class="field">
+        <small>Contact ID</small>
+        <strong id="contactId">—</strong>
+      </div>
+      <div class="field">
+        <small>Call ID</small>
+        <strong id="callId">—</strong>
+      </div>
+      <div id="extraFields"></div>
     </div>
   </section>
 
-  <div class="foot" id="connection">
-    ממתין לחיבור נתונים מאומת
-  </div>
+  <footer class="footer">
+    <span>Powered by TYKO</span>
+    <span id="connection">Waiting for live connection</span>
+  </footer>
 </main>
 
 <script>
-const shell=document.getElementById('shell');
-const get=id=>document.getElementById(id);
+"use strict";
 
-let startedAt=null;
-let lastCallId=null;
+// Set this to the authenticated WSS endpoint
+// when the realtime service is available.
+// Example format: wss://your-domain.example/live
+const WS_URL = "";
 
-function renderCall(payload){
-  if(!payload||typeof payload!=='object')return;
+const $ = id => document.getElementById(id);
 
-  const d=payload.custom_attributes||payload;
-  const status=String(
-    d.dialer_status||d.status||''
-  ).toUpperCase();
+let conversationId = null;
+let currentCallId = null;
+let startedAt = null;
+let endTimer = null;
+let socket = null;
+let reconnectTimer = null;
+let reconnectDelay = 1000;
 
-  const callId=String(
-    d.dialer_callid||d.callid||''
+const END_STATUSES = new Set([
+  "COMPLETECALLER",
+  "COMPLETEAGENT",
+  "COMPLETEAGENTTRANSFER",
+  "HANGUP",
+  "ENDED",
+  "DISCONNECT",
+  "ABANDON"
+]);
+
+const ACTIVE_STATUSES = new Set([
+  "CONNECT",
+  "ANSWER",
+  "ANSWERED"
+]);
+
+function setText(id, value) {
+  $(id).textContent =
+    value === undefined ||
+    value === null ||
+    value === ""
+      ? "—" : String(value);
+}
+
+function setStandby() {
+  $("waiting").style.display = "block";
+  $("call").style.display = "none";
+  $("status").textContent = "STANDBY";
+  $("status").className = "status";
+  currentCallId = null;
+  startedAt = null;
+}
+
+function updateTimer() {
+  if (!startedAt) return;
+
+  const seconds = Math.max(
+    0,
+    Math.floor((Date.now() - startedAt) / 1000)
   );
 
-  if([
-    'COMPLETECALLER',
-    'COMPLETEAGENT',
-    'HANGUP',
-    'ENDED',
-    'DISCONNECT'
-  ].includes(status)){
-    if(!lastCallId||!callId||callId===lastCallId){
-      setTimeout(()=>{
-        shell.classList.remove('live');
-        get('status').textContent='ממתין לשיחה';
-        startedAt=null;
-      },3000);
+  const hours = Math.floor(seconds / 3600);
+  const minutes = Math.floor((seconds % 3600) / 60);
+  const secs = seconds % 60;
+  const pad = n => String(n).padStart(2, "0");
+
+  $("duration").textContent =
+    hours > 0
+      ? pad(hours)+":"+pad(minutes)+":"+pad(secs)
+      : pad(minutes)+":"+pad(secs);
+}
+
+setInterval(updateTimer, 1000);
+
+function showCall(data) {
+  clearTimeout(endTimer);
+
+  const id = String(
+    data.dialer_callid || data.callid || ""
+  );
+
+  const isNewCall = id !== currentCallId;
+
+  if (isNewCall) {
+    currentCallId = id;
+    startedAt = Date.now();
+  }
+
+  if (data.connected_at) {
+    const parsed = Date.parse(data.connected_at);
+    if (Number.isFinite(parsed)) startedAt = parsed;
+  }
+
+  setText(
+    "name",
+    data.dialer_customer_name ||
+    data.customer_name ||
+    data.dialer_phone ||
+    data.phone
+  );
+
+  setText(
+    "phone",
+    data.dialer_phone || data.phone
+  );
+
+  setText(
+    "agent",
+    data.dialer_agent_name || data.agent_name
+  );
+
+  setText(
+    "extension",
+    data.dialer_extension || data.extension
+  );
+
+  setText(
+    "queue",
+    data.dialer_queue || data.queue
+  );
+
+  setText(
+    "contactId",
+    data.dialer_contact_id || data.contact_id
+  );
+
+  setText("callId", id);
+
+  const status = String(
+    data.dialer_status || data.status || "CONNECT"
+  ).toUpperCase();
+
+  setText("callStatus", status);
+
+  $("extraFields").replaceChildren();
+
+  // Optional additional customer fields
+  const extras = data.customer_fields;
+
+  if (extras && typeof extras === "object") {
+    for (const [key, value] of Object.entries(extras)) {
+      if (
+        value === null ||
+        value === undefined ||
+        typeof value === "object"
+      ) continue;
+
+      const field = document.createElement("div");
+      field.className = "field";
+
+      const label = document.createElement("small");
+      label.textContent = key.replace(/_/g, " ");
+
+      const strong = document.createElement("strong");
+      strong.textContent = String(value);
+
+      field.append(label, strong);
+      $("extraFields").appendChild(field);
     }
+  }
+
+  $("waiting").style.display = "none";
+  $("call").style.display = "block";
+  $("status").textContent = "● LIVE CALL";
+  $("status").className = "status connected";
+
+  updateTimer();
+}
+
+function endCall(data) {
+  const id = String(
+    data.dialer_callid || data.callid || ""
+  );
+
+  if (
+    !currentCallId ||
+    (id && id !== currentCallId)
+  ) return;
+
+  clearTimeout(endTimer);
+
+  $("status").textContent = "CALL ENDED";
+  $("status").className = "status ended";
+  setText("callStatus", "Completed");
+
+  const endingCallId = currentCallId;
+
+  endTimer = setTimeout(() => {
+    if (currentCallId === endingCallId) {
+      setStandby();
+    }
+  }, 3500);
+}
+
+function handleLiveEvent(message) {
+  if (!message || typeof message !== "object") return;
+
+  // Never display another conversation's events.
+  if (conversationId === null) return;
+
+  const target = Number(
+    message.conversation_id ??
+    message.conversation?.id
+  );
+
+  if (
+    !Number.isFinite(target) ||
+    target !== conversationId
+  ) return;
+
+  const data =
+    message.custom_attributes ||
+    message.data?.custom_attributes ||
+    message.data ||
+    message;
+
+  const status = String(
+    data.dialer_status || data.status || ""
+  ).toUpperCase();
+
+  if (END_STATUSES.has(status)) {
+    endCall(data);
+  } else if (ACTIVE_STATUSES.has(status)) {
+    showCall(data);
+  }
+}
+
+// Connvo Dashboard App context
+window.addEventListener("message", event => {
+  if (event.origin !== "https://app.connvo.com") {
     return;
   }
 
-  if(status!=='CONNECT'&&status!=='ANSWER')return;
+  const message = event.data;
 
-  lastCallId=callId||lastCallId;
-  startedAt=Date.now();
+  if (
+    message?.event !== "appContext" &&
+    message?.event !== "app_context"
+  ) return;
 
-  get('name').textContent=
-    d.dialer_customer_name||
-    d.customer_name||
-    d.dialer_phone||
-    d.phone||'לקוח';
+  const context = message.data || {};
+  const id = Number(context.conversation?.id);
 
-  get('phone').textContent=
-    d.dialer_phone||d.phone||'—';
+  if (!Number.isFinite(id)) return;
 
-  get('agent').textContent=
-    d.agent_name||'—';
-
-  get('extension').textContent=
-    d.dialer_extension||d.extension||'—';
-
-  get('queue').textContent=
-    d.dialer_queue||d.queue||'—';
-
-  get('status').textContent='שיחה פעילה';
-  shell.classList.add('live');
-}
-
-setInterval(()=>{
-  if(!startedAt)return;
-  const s=Math.floor((Date.now()-startedAt)/1000);
-
-  get('duration').textContent=
-    String(Math.floor(s/60)).padStart(2,'0')+
-    ':'+
-    String(s%60).padStart(2,'0');
-},1000);
-
-window.addEventListener('message',e=>{
-  if(e.origin!=='https://app.connvo.com')return;
-
-  const d=e.data;
-
-  if(d?.event==='appContext'){
-    const c=d.data?.conversation;
-    if(c?.id){
-      get('connection').textContent=
-        'Conversation '+c.id+
-        ' · ממתין לערוץ עדכונים';
-    }
+  if (conversationId !== id) {
+    conversationId = id;
+    setStandby();
+    if (socket) socket.close();
+    connectRealtime();
   }
 });
 
-if(window.parent!==window){
+function connectRealtime() {
+  if (!WS_URL || conversationId === null) {
+    $("connection").textContent =
+      "Realtime connection not configured";
+    return;
+  }
+
+  clearTimeout(reconnectTimer);
+
+  // This endpoint must authenticate the viewer and
+  // authorize access to the conversation.
+  socket = new WebSocket(WS_URL);
+
+  socket.addEventListener("open", () => {
+    reconnectDelay = 1000;
+    $("connection").textContent = "Live connection active";
+
+    // The server must validate this subscription.
+    socket.send(JSON.stringify({
+      action: "subscribe",
+      conversation_id: conversationId
+    }));
+  });
+
+  socket.addEventListener("message", event => {
+    try {
+      handleLiveEvent(JSON.parse(event.data));
+    } catch (error) {
+      console.warn("Invalid realtime event", error);
+    }
+  });
+
+  socket.addEventListener("close", () => {
+    $("connection").textContent = "Reconnecting...";
+
+    reconnectTimer = setTimeout(() => {
+      reconnectDelay = Math.min(
+        reconnectDelay * 2, 15000
+      );
+      connectRealtime();
+    }, reconnectDelay);
+  });
+
+  socket.addEventListener("error", () => {
+    $("connection").textContent =
+      "Live connection unavailable";
+  });
+}
+
+if (window.parent !== window) {
   window.parent.postMessage(
-    'chatwoot-dashboard-app:fetch-info',
-    'https://app.connvo.com'
+    "chatwoot-dashboard-app:fetch-info",
+    "https://app.connvo.com"
   );
 }
 </script>

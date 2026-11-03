@@ -4,318 +4,322 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Connvo | Live Dialer</title>
+<title>Live Dialer</title>
 
 <style>
 :root {
-  --blue:#296BFF;
-  --navy:#1A253A;
-  --muted:#7F8BA3;
-  --bg:#F4F7FF;
-  --line:#E7ECF5;
-  --white:#FFFFFF;
-  --green:#12A874;
+  --blue: #296BFF;
+  --navy: #1A253A;
+  --muted: #7F8BA3;
+  --bg: #F4F7FF;
+  --line: #E7ECF5;
+  --green: #12A874;
 }
 
-* { box-sizing:border-box; }
+* {
+  box-sizing: border-box;
+}
 
 body {
-  margin:0;
-  padding:28px 14px;
-  background:var(--bg);
-  font-family:Inter,Arial,sans-serif;
-  color:var(--navy);
+  margin: 0;
+  padding: 24px 14px;
+  background: var(--bg);
+  font-family: Inter, Arial, sans-serif;
+  color: var(--navy);
 }
 
 .app {
-  max-width:790px;
-  margin:12px auto;
-  background:white;
-  border:1px solid var(--line);
-  border-radius:24px;
-  padding:32px;
-  box-shadow:0 16px 55px rgba(29,65,135,.07);
+  max-width: 790px;
+  margin: 10px auto;
+  background: white;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  padding: 30px;
+  box-shadow: 0 16px 50px rgba(29,65,135,.06);
 }
 
 .header {
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  padding-bottom:25px;
-  border-bottom:1px solid var(--line);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 22px;
+  border-bottom: 1px solid var(--line);
 }
 
-.brand {
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-
-.brand-icon {
-  width:45px;
-  height:45px;
-  flex-shrink:0;
-}
-
-.brand-name {
-  font-size:30px;
-  font-weight:850;
-  letter-spacing:-1.3px;
-  color:var(--navy);
-}
-
-.brand-subtitle {
-  font-size:11px;
-  color:var(--muted);
-  margin-top:3px;
+.header-title {
+  font-size: 20px;
+  font-weight: 750;
+  letter-spacing: -.5px;
 }
 
 .status {
-  font-size:11px;
-  font-weight:800;
-  border-radius:30px;
-  padding:10px 14px;
-  background:#EAF0FF;
-  color:var(--blue);
-  white-space:nowrap;
+  font-size: 11px;
+  font-weight: 800;
+  padding: 10px 15px;
+  border-radius: 30px;
+  color: var(--blue);
+  background: #EAF0FF;
+  white-space: nowrap;
 }
 
 .status.live {
-  background:#E5F9EF;
-  color:#07865A;
+  color: #07865A;
+  background: #E5F9EF;
 }
 
 .status.ended {
-  background:#EEF1F6;
-  color:#667085;
+  color: #667085;
+  background: #EEF1F6;
 }
 
-/* Waiting screen */
+/* Waiting */
 
 .waiting {
-  text-align:center;
-  padding:65px 12px 55px;
+  text-align: center;
+  padding: 65px 12px 55px;
 }
 
 .wait-circle {
-  width:108px;
-  height:108px;
-  border-radius:50%;
-  background:#EAF0FF;
-  margin:0 auto 30px;
-  display:grid;
-  place-items:center;
-  position:relative;
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  background: #EAF0FF;
+  margin: 0 auto 32px;
+  display: grid;
+  place-items: center;
+  position: relative;
 }
 
 .wait-circle:before,
 .wait-circle:after {
-  content:"";
-  position:absolute;
-  inset:-11px;
-  border:2px solid #AFC5FF;
-  border-radius:50%;
-  animation:pulse 2.5s infinite;
+  content: "";
+  position: absolute;
+  inset: -11px;
+  border: 2px solid #AFC5FF;
+  border-radius: 50%;
+  animation: pulse 2.5s infinite;
 }
 
 .wait-circle:after {
-  animation-delay:1.25s;
+  animation-delay: 1.25s;
 }
 
 @keyframes pulse {
-  from { transform:scale(.75);opacity:.8; }
-  to { transform:scale(1.6);opacity:0; }
+  from {
+    transform: scale(.75);
+    opacity: .8;
+  }
+  to {
+    transform: scale(1.6);
+    opacity: 0;
+  }
 }
 
 .wait-circle svg {
-  width:43px;
-  height:43px;
-  stroke:var(--blue);
+  width: 43px;
+  height: 43px;
+  stroke: var(--blue);
 }
 
 .waiting h1 {
-  font-size:26px;
-  letter-spacing:-.6px;
-  margin:0 0 10px;
+  font-size: 26px;
+  letter-spacing: -.6px;
+  margin: 0 0 12px;
 }
 
 .waiting p {
-  font-size:14px;
-  line-height:1.8;
-  color:var(--muted);
-  margin:0;
+  font-size: 14px;
+  line-height: 1.8;
+  color: var(--muted);
+  margin: 0;
 }
 
 .dots {
-  display:flex;
-  justify-content:center;
-  gap:7px;
-  margin-top:23px;
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  margin-top: 24px;
 }
 
 .dots span {
-  width:7px;
-  height:7px;
-  background:var(--blue);
-  border-radius:50%;
-  animation:blink 1.2s infinite;
+  width: 7px;
+  height: 7px;
+  background: var(--blue);
+  border-radius: 50%;
+  animation: blink 1.2s infinite;
 }
 
-.dots span:nth-child(2) { animation-delay:.2s; }
-.dots span:nth-child(3) { animation-delay:.4s; }
+.dots span:nth-child(2) {
+  animation-delay: .2s;
+}
+
+.dots span:nth-child(3) {
+  animation-delay: .4s;
+}
 
 @keyframes blink {
-  0%,80%,100% { opacity:.2; }
-  40% { opacity:1; }
+  0%, 80%, 100% { opacity: .2; }
+  40% { opacity: 1; }
 }
 
 /* Live call */
 
-.call { display:none; }
+.call {
+  display: none;
+}
 
 .call-header {
-  padding:30px 0 24px;
+  padding: 30px 0 24px;
 }
 
 .call-state {
-  display:flex;
-  align-items:center;
-  gap:8px;
-  color:var(--green);
-  font-size:11px;
-  font-weight:800;
-  letter-spacing:.5px;
-  margin-bottom:21px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  margin-bottom: 20px;
 }
 
 .live-dot {
-  width:8px;
-  height:8px;
-  background:var(--green);
-  border-radius:50%;
-  animation:blink 1.4s infinite;
+  width: 8px;
+  height: 8px;
+  background: var(--green);
+  border-radius: 50%;
+  animation: blink 1.4s infinite;
 }
 
 .customer-row {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  gap:16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
 }
 
 .eyebrow {
-  color:var(--blue);
-  font-size:11px;
-  font-weight:800;
-  text-transform:uppercase;
-  letter-spacing:1px;
+  color: var(--blue);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .customer-name {
-  font-size:33px;
-  font-weight:800;
-  letter-spacing:-1px;
-  margin:9px 0;
-  overflow-wrap:anywhere;
+  font-size: 33px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin: 9px 0;
+  overflow-wrap: anywhere;
 }
 
 .customer-phone {
-  color:#65738D;
-  font-size:17px;
-  direction:ltr;
-  text-align:left;
+  color: #65738D;
+  font-size: 17px;
+  direction: ltr;
+  text-align: left;
 }
 
 .timer {
-  background:#EAF0FF;
-  padding:18px 24px;
-  border-radius:17px;
-  text-align:center;
-  color:var(--blue);
-  flex-shrink:0;
+  background: #EAF0FF;
+  padding: 18px 24px;
+  border-radius: 17px;
+  text-align: center;
+  color: var(--blue);
+  flex-shrink: 0;
 }
 
 .timer strong {
-  font-size:29px;
-  display:block;
-  font-variant-numeric:tabular-nums;
+  font-size: 29px;
+  display: block;
+  font-variant-numeric: tabular-nums;
 }
 
 .timer small {
-  display:block;
-  font-size:10px;
-  font-weight:700;
-  margin-top:5px;
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  margin-top: 5px;
 }
 
-/* Dynamic customer details */
+/* Dynamic details */
 
 .details {
-  border:1px solid var(--line);
-  border-radius:17px;
-  overflow:hidden;
-  margin-top:5px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 5px;
 }
 
 .detail-row {
-  display:flex;
-  align-items:flex-start;
-  justify-content:space-between;
-  gap:24px;
-  padding:16px 19px;
-  border-bottom:1px solid var(--line);
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 16px 19px;
+  border-bottom: 1px solid var(--line);
 }
 
-.detail-row:last-child { border-bottom:0; }
+.detail-row:last-child {
+  border-bottom: 0;
+}
 
 .detail-label {
-  font-size:13px;
-  color:var(--muted);
-  flex:0 0 130px;
+  font-size: 13px;
+  color: var(--muted);
+  flex: 0 0 130px;
 }
 
 .detail-value {
-  font-size:13px;
-  font-weight:650;
-  color:var(--navy);
-  text-align:right;
-  overflow-wrap:anywhere;
-  white-space:pre-wrap;
-  min-width:0;
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--navy);
+  text-align: right;
+  overflow-wrap: anywhere;
+  white-space: pre-wrap;
+  min-width: 0;
 }
 
 .detail-value a {
-  color:var(--blue);
-  text-decoration:none;
+  color: var(--blue);
+  text-decoration: none;
 }
 
 .detail-value a:hover {
-  text-decoration:underline;
+  text-decoration: underline;
 }
 
-.footer {
-  border-top:1px solid var(--line);
-  margin-top:28px;
-  padding-top:18px;
-  display:flex;
-  justify-content:space-between;
-  gap:12px;
-  color:var(--muted);
-  font-size:11px;
-}
+@media (max-width: 550px) {
+  body {
+    padding: 8px;
+  }
 
-@media(max-width:550px) {
-  body { padding:8px; }
-  .app { padding:20px;margin:5px auto; }
-  .brand-name { font-size:25px; }
-  .brand-icon { width:36px;height:36px; }
-  .customer-name { font-size:25px; }
-  .timer { padding:13px; }
-  .timer strong { font-size:22px; }
-  .detail-label { flex-basis:90px; }
-  .detail-row { padding:14px 12px; }
-  .footer { font-size:10px; }
+  .app {
+    padding: 20px;
+    margin: 5px auto;
+  }
+
+  .customer-name {
+    font-size: 25px;
+  }
+
+  .timer {
+    padding: 13px;
+  }
+
+  .timer strong {
+    font-size: 22px;
+  }
+
+  .detail-label {
+    flex-basis: 90px;
+  }
+
+  .detail-row {
+    padding: 14px 12px;
+  }
 }
 </style>
 </head>
@@ -324,110 +328,82 @@ body {
 
 <main class="app">
 
-<header class="header">
-  <div class="brand">
+  <header class="header">
+    <div class="header-title">Live Dialer</div>
+    <div class="status" id="status">STANDBY</div>
+  </header>
 
-    <svg class="brand-icon" viewBox="0 0 48 48"
-      xmlns="http://www.w3.org/2000/svg">
-      <g fill="#296BFF">
-        <path d="M20 2h8v14h-8z"/>
-        <path d="M20 32h8v14h-8z"/>
-        <path d="M2 20h14v8H2z"/>
-        <path d="M32 20h14v8H32z"/>
-        <path d="M8.8 3.2l10 10-5.6 5.6-10-10z"/>
-        <path d="M34.8 29.2l10 10-5.6 5.6-10-10z"/>
-        <path d="M39.2 3.2l5.6 5.6-10 10-5.6-5.6z"/>
-        <path d="M13.2 29.2l5.6 5.6-10 10-5.6-5.6z"/>
-      </g>
-    </svg>
+  <section class="waiting" id="waiting">
 
-    <div>
-      <div class="brand-name">Connvo</div>
-      <div class="brand-subtitle">Live Dialer Workspace</div>
-    </div>
-  </div>
-
-  <div class="status" id="status">STANDBY</div>
-</header>
-
-<section class="waiting" id="waiting">
-
-  <div class="wait-circle">
-    <svg viewBox="0 0 24 24" fill="none"
-      stroke-width="1.7"
-      stroke-linecap="round"
-      stroke-linejoin="round">
-      <path d="M22 16.92v3a2 2 0 0 1-2.18 2
-      19.79 19.79 0 0 1-8.63-3.07
-      19.5 19.5 0 0 1-6-6
-      19.79 19.79 0 0 1-3.07-8.67
-      A2 2 0 0 1 4.11 2h3
-      a2 2 0 0 1 2 1.72
-      c.13.96.36 1.91.68 2.81
-      a2 2 0 0 1-.45 2.11L8.09 9.91
-      a16 16 0 0 0 6 6l1.27-1.25
-      a2 2 0 0 1 2.11-.45
-      c.9.32 1.85.55 2.81.68
-      A2 2 0 0 1 22 16.92z"/>
-    </svg>
-  </div>
-
-  <h1>Waiting for next call</h1>
-  <p>
-    Your workspace is ready.<br>
-    Customer information will appear automatically.
-  </p>
-
-  <div class="dots">
-    <span></span><span></span><span></span>
-  </div>
-
-</section>
-
-<section class="call" id="call">
-
-  <div class="call-header">
-
-    <div class="call-state">
-      <span class="live-dot" id="liveDot"></span>
-      <span id="callLabel">LIVE CALL CONNECTED</span>
+    <div class="wait-circle">
+      <svg viewBox="0 0 24 24"
+           fill="none"
+           stroke-width="1.7"
+           stroke-linecap="round"
+           stroke-linejoin="round">
+        <path d="M22 16.92v3a2 2 0 0 1-2.18 2
+        19.79 19.79 0 0 1-8.63-3.07
+        19.5 19.5 0 0 1-6-6
+        19.79 19.79 0 0 1-3.07-8.67
+        A2 2 0 0 1 4.11 2h3
+        a2 2 0 0 1 2 1.72
+        c.13.96.36 1.91.68 2.81
+        a2 2 0 0 1-.45 2.11L8.09 9.91
+        a16 16 0 0 0 6 6l1.27-1.25
+        a2 2 0 0 1 2.11-.45
+        c.9.32 1.85.55 2.81.68
+        A2 2 0 0 1 22 16.92z"/>
+      </svg>
     </div>
 
-    <div class="customer-row">
-      <div>
-        <div class="eyebrow">Customer Profile</div>
-        <div class="customer-name" id="customerName">—</div>
-        <div class="customer-phone" id="customerPhone">—</div>
+    <h1>Waiting for next call</h1>
+
+    <p>
+      Your workspace is ready.<br>
+      Customer information will appear automatically.
+    </p>
+
+    <div class="dots">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+
+  </section>
+
+  <section class="call" id="call">
+
+    <div class="call-header">
+
+      <div class="call-state">
+        <span class="live-dot" id="liveDot"></span>
+        <span id="callLabel">LIVE CALL CONNECTED</span>
       </div>
 
-      <div class="timer">
-        <strong id="duration">00:00</strong>
-        <small>CALL DURATION</small>
+      <div class="customer-row">
+
+        <div>
+          <div class="eyebrow">Customer Profile</div>
+          <div class="customer-name" id="customerName">—</div>
+          <div class="customer-phone" id="customerPhone">—</div>
+        </div>
+
+        <div class="timer">
+          <strong id="duration">00:00</strong>
+          <small>CALL DURATION</small>
+        </div>
+
       </div>
     </div>
 
-  </div>
+    <div class="details" id="details"></div>
 
-  <div class="details" id="details"></div>
-
-</section>
-
-<footer class="footer">
-  <span>Powered by Connvo</span>
-  <span id="connection">Connecting to Connvo...</span>
-</footer>
+  </section>
 
 </main>
 
 <script>
 "use strict";
-
-/*
-  Connvo Live Dialer v8
-  Uses existing Connvo Dashboard App context.
-  No API token in HTML.
-  No external WebSocket.
-*/
 
 const CONNVO_ORIGIN = "https://app.connvo.com";
 const POLL_INTERVAL = 1000;
@@ -457,7 +433,6 @@ let endedCallId = null;
 let startedAt = null;
 let endTimeout = null;
 let lastSignature = null;
-let lastContextAt = 0;
 
 function valid(value) {
   return value !== null &&
@@ -468,7 +443,8 @@ function valid(value) {
 }
 
 function setText(id, value) {
-  $(id).textContent = valid(value) ? String(value) : "—";
+  $(id).textContent =
+    valid(value) ? String(value) : "—";
 }
 
 function addDetail(label, value, kind) {
@@ -495,6 +471,7 @@ function addDetail(label, value, kind) {
 
   row.appendChild(left);
   row.appendChild(right);
+
   $("details").appendChild(row);
 }
 
@@ -538,8 +515,12 @@ function setStandby() {
 }
 
 function formatDuration(ms) {
-  const seconds = Math.max(0, Math.floor(ms / 1000));
-  const pad = x => String(x).padStart(2, "0");
+  const seconds = Math.max(
+    0,
+    Math.floor(ms / 1000)
+  );
+
+  const pad = n => String(n).padStart(2, "0");
 
   const hours = Math.floor(seconds / 3600);
   const minutes = Math.floor((seconds % 3600) / 60);
@@ -551,8 +532,11 @@ function formatDuration(ms) {
 }
 
 function updateTimer() {
-  if (!currentCallId || !startedAt ||
-      currentCallId === endedCallId) return;
+  if (!currentCallId ||
+      !startedAt ||
+      currentCallId === endedCallId) {
+    return;
+  }
 
   $("duration").textContent =
     formatDuration(Date.now() - startedAt);
@@ -566,7 +550,9 @@ function parseTime(value) {
   let parsed;
 
   if (typeof value === "number") {
-    parsed = value < 1e12 ? value * 1000 : value;
+    parsed = value < 1e12
+      ? value * 1000
+      : value;
   } else {
     parsed = Date.parse(value);
   }
@@ -580,20 +566,25 @@ function parseTime(value) {
 
 function showCall(data, context) {
   const id = String(data.dialer_callid || "");
+
   if (!id || endedCallId === id) return;
 
   clearTimeout(endTimeout);
 
   if (currentCallId !== id) {
     currentCallId = id;
+
     startedAt =
-      parseTime(data.dialer_connected_at) || Date.now();
+      parseTime(data.dialer_connected_at) ||
+      Date.now();
   }
 
   setText(
     "customerName",
-    data.dialer_customer_name || data.dialer_phone
+    data.dialer_customer_name ||
+    data.dialer_phone
   );
+
   setText("customerPhone", data.dialer_phone);
 
   showDetails(data, context);
@@ -601,7 +592,9 @@ function showCall(data, context) {
   $("waiting").style.display = "none";
   $("call").style.display = "block";
 
-  $("callLabel").textContent = "LIVE CALL CONNECTED";
+  $("callLabel").textContent =
+    "LIVE CALL CONNECTED";
+
   $("callLabel").style.color = "#12A874";
   $("liveDot").style.display = "block";
 
@@ -613,6 +606,7 @@ function showCall(data, context) {
 
 function endCall(data) {
   const id = String(data.dialer_callid || "");
+
   if (!id) return;
 
   endedCallId = id;
@@ -632,7 +626,9 @@ function endCall(data) {
   $("liveDot").style.display = "none";
 
   endTimeout = setTimeout(() => {
-    if (currentCallId === id) setStandby();
+    if (currentCallId === id) {
+      setStandby();
+    }
   }, END_DELAY);
 }
 
@@ -641,11 +637,6 @@ function updateFromContext(context) {
   const id = Number(conversation?.id);
 
   if (!Number.isInteger(id) || id <= 0) return;
-
-  lastContextAt = Date.now();
-
-  $("connection").textContent =
-    "Connvo connected · Conversation " + id;
 
   if (conversationId !== id) {
     conversationId = id;
@@ -658,9 +649,11 @@ function updateFromContext(context) {
   const signature = JSON.stringify(data);
 
   if (signature === lastSignature) return;
+
   lastSignature = signature;
 
   const callid = String(data.dialer_callid || "");
+
   const status = String(
     data.dialer_status || ""
   ).toUpperCase();
@@ -676,7 +669,9 @@ function updateFromContext(context) {
 
 window.addEventListener("message", event => {
   if (event.origin !== CONNVO_ORIGIN ||
-      event.source !== window.parent) return;
+      event.source !== window.parent) {
+    return;
+  }
 
   let message = event.data;
 
@@ -697,28 +692,17 @@ window.addEventListener("message", event => {
 });
 
 function requestContext() {
-  if (window.parent === window) {
-    $("connection").textContent =
-      "Open this workspace inside Connvo";
-    return;
-  }
+  if (window.parent === window) return;
 
   window.parent.postMessage(
     "chatwoot-dashboard-app:fetch-info",
     CONNVO_ORIGIN
   );
-
-  if (
-    lastContextAt &&
-    Date.now() - lastContextAt > 10000
-  ) {
-    $("connection").textContent =
-      "Waiting for Connvo updates...";
-  }
 }
 
 requestContext();
 setInterval(requestContext, POLL_INTERVAL);
+
 </script>
 
 </body>
